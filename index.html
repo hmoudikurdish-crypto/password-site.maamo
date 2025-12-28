@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Strength Checker | Secure Test</title>
+  <meta name="description" content="Check your password strength securely. No data is saved. Free password strength checker.">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      background: #020617;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(0,0,0,.5);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+    .bar {
+      height: 10px;
+      background: #334155;
+      border-radius: 5px;
+      margin-top: 15px;
+      overflow: hidden;
+    }
+    .fill {
+      height: 100%;
+      width: 0%;
+      transition: .3s;
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+    ul {
+      text-align: left;
+      font-size: 14px;
+      margin-top: 10px;
+      color: #cbd5f5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Password Strength Checker 🔐</h2>
+  <input type="password" id="password" placeholder="Enter password" oninput="check()">
+
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
+
+  <div id="result"></div>
+
+  <ul id="tips"></ul>
+</div>
+
+<script>
+function check() {
+  const p = document.getElementById("password").value;
+  const fill = document.getElementById("fill");
+  const result = document.getElementById("result");
+  const tips = document.getElementById("tips");
+
+  let score = 0;
+  tips.innerHTML = "";
+
+  if (p.length >= 8) score++; else tips.innerHTML += "<li>Use at least 8 characters</li>";
+  if (/[A-Z]/.test(p)) score++; else tips.innerHTML += "<li>Add uppercase letters</li>";
+  if (/[a-z]/.test(p)) score++; else tips.innerHTML += "<li>Add lowercase letters</li>";
+  if (/[0-9]/.test(p)) score++; else tips.innerHTML += "<li>Add numbers</li>";
+  if (/[^A-Za-z0-9]/.test(p)) score++; else tips.innerHTML += "<li>Add symbols (!@#$)</li>";
+
+  if (score <= 2) {
+    fill.style.width = "30%";
+    fill.style.background = "red";
+    result.innerText = "Weak ❌";
+  } else if (score <= 4) {
+    fill.style.width = "65%";
+    fill.style.background = "orange";
+    result.innerText = "Medium ⚠️";
+  } else {
+    fill.style.width = "100%";
+    fill.style.background = "lime";
+    result.innerText = "Strong ✅";
+  }
+}
+</script>
+
+</body>
+</html>
